@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "node": "^26.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^10.7.0",
+    "prettier": "^3.9.6"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  }
+}
