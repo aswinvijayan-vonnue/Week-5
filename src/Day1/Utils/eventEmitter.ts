@@ -18,22 +18,22 @@ class EventEmitter {
   constructor() {
     this.events = {};
   }
-  on<T extends unknown>(event: string, listener: listenerFn) {
+  on(event: string, listener: listenerFn): void {
     if (!this.events[event]) {
       this.events[event] = [];
     }
     this.events[event].push(listener);
   }
-  off<T extends unknown>(event: string, listener: listenerFn) {
+  off(event: string, listener: listenerFn): void {
     if (!this.events[event]) return;
     this.events[event] = this.events[event].filter((fn) => fn !== listener);
   }
-  emit<T extends unknown[]>(event: string, ...args: listenerType[]) {
+  emit(event: string, ...args: listenerType[]): void {
     if (!this.events[event]) return;
     this.events[event].forEach((listener) => listener(...args));
     if (this.events['*']) this.events['*'].forEach((listener) => listener(...args));
   }
-  once<T extends unknown>(event: string, listener: listenerFn) {
+  once(event: string, listener: listenerFn): void {
     const onceFunction: listenerFn = (...args: listenerType[]) => {
       listener(...args);
       this.off(event, onceFunction);
@@ -63,14 +63,14 @@ class UserStore extends EventEmitter {
     super();
     this.users = [];
   }
-  getUsers() {
+  getUsers(): User[] {
     return this.users;
   }
-  addUser(user: User) {
+  addUser(user: User): void {
     this.users.push(user);
     this.emit('userAdded', user);
   }
-  removeUser(id: number) {
+  removeUser(id: number): void {
     let isFound = this.users.find((u) => u.id == id);
     if (isFound) {
       this.users = this.users.filter((u) => u.id !== id);
@@ -79,7 +79,7 @@ class UserStore extends EventEmitter {
       this.emit('userNotFound', id);
     }
   }
-  updateUser(updatePara: Changes) {
+  updateUser(updatePara: Changes): void {
     let isFound = this.users.find((user) => user.id == updatePara.id);
     if (isFound) {
       this.users = this.users.map((u) => {
@@ -95,22 +95,26 @@ class UserStore extends EventEmitter {
   }
 }
 
-const addedMessage = (user: listenerType) => console.log('Successfully added ', user);
-const deletedMessage = (user: listenerType) => console.log('deleted successfully', user);
-const updatedMessage = (user: listenerType) => console.log('updated successfully', user);
-const notFoundMessage = (id: listenerType) => console.log('Cannot find user with id: ', id);
-const store = new UserStore();
-const getUsers = () => console.log('Users', store.getUsers());
+const addedMessage: (user: listenerType) => void = (user: listenerType) =>
+  console.log('Successfully added ', user);
+const deletedMessage: (user: listenerType) => void = (user: listenerType) =>
+  console.log('deleted successfully', user);
+const updatedMessage: (user: listenerType) => void = (user: listenerType) =>
+  console.log('updated successfully', user);
+const notFoundMessage: (usidr: listenerType) => void = (id: listenerType) =>
+  console.log('Cannot find user with id: ', id);
+const store: UserStore = new UserStore();
+const getUsers: () => void = () => console.log('Users', store.getUsers());
 store.on('userAdded', addedMessage);
 store.on('userDeleted', deletedMessage);
 store.on('userUpdated', updatedMessage);
 store.on('userNotFound', notFoundMessage);
 store.on('*', getUsers);
-const user1 = { id: 101, name: 'Akshay', department: 'CSE' };
-const user2 = { id: 102, name: 'Amal', department: 'ECE' };
-const user3 = { id: 103, name: 'Liya', department: 'CSE' };
-const update1 = { id: 101, department: 'EEE' };
-const update = { id: 104, department: 'EEE' };
+const user1: User = { id: 101, name: 'Akshay', department: 'CSE' };
+const user2: User = { id: 102, name: 'Amal', department: 'ECE' };
+const user3: User = { id: 103, name: 'Liya', department: 'CSE' };
+const update1: Changes = { id: 101, department: 'EEE' };
+const update: Changes = { id: 104, department: 'EEE' };
 store.addUser(user1);
 store.addUser(user2);
 store.addUser(user3);

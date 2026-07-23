@@ -6,8 +6,8 @@ const decrement = (num: number): number => num - 1;
 
 const pipe =
   <Input, R>(...fns: ((arg: Input | R) => R)[]) =>
-  (arg: Input) =>
-    fns.reduce((acc: Input | R, fn) => fn(acc), arg);
+  (arg: Input): R =>
+    fns.reduce((acc: Input | R, fn) => fn(acc), arg) as R;
 //piped function
 const pipedFunction = pipe(double, addOne);
 //left to right so return 11
