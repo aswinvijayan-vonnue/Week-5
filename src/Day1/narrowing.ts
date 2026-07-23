@@ -52,7 +52,6 @@ function isUser(value: unknown): boolean {
     let val = (duplicate as Record<string, unknown>)[key];
     if (!val || typeof val !== value) return false;
     delete (duplicate as Record<string, unknown>)[key];
-    console.log(duplicate);
   }
   if (Object.keys(duplicate).length > 0) return false;
 
@@ -87,4 +86,4 @@ function getArea(newShape: Shape): number {
 
 let kind1: Shape = { kind: 'circle', radius: 7 };
 let kind2: Shape = { kind: 'rect', w: 7, h: 50 };
-console.log(getArea(kind1));
+console.log('Area of circle with radius 7  is:', getArea(kind1));
