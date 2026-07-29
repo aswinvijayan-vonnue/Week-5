@@ -3,11 +3,16 @@
     "node": "^26.5.0"
   },
   "devDependencies": {
+    "@types/node": "^26.1.2",
     "eslint": "^10.7.0",
     "prettier": "^3.9.6"
   },
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch"
+  },
+  "type": "module",
+  "imports": {
+    "#test-library": "./src/test-library.js"
   }
 }
